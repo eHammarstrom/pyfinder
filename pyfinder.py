@@ -15,12 +15,15 @@ def main():
 def search(s_args, s_dir):
     hits = defaultdict(list)
     os.chdir(s_dir[0])
-    for file in glob.glob("*.py"):
-        with open(file) as f:
-            contents = f.read()
-        for s_arg in s_args:
-            if s_arg in contents:
-                hits[s_arg].append(file)
+    for file in glob.glob("*.*"):
+        try:
+            with open(file) as f:
+                contents = f.read()
+                for s_arg in s_args:
+                    if s_arg in contents:
+                        hits[s_arg].append(file)
+        except Exception as err:
+            print("({0}) --> ".format(err) + file)
     return hits
 
 def finePrint(toPrint):
